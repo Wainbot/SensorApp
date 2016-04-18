@@ -1,0 +1,14 @@
+/* Empty. Add your own CSS if you like */
+.alert-date {
+  font-size: 8pt !important;
+  float: right; }
+
+.button-dashboard {
+  padding: 15px;
+  font-size: 10pt; }
+  .button-dashboard .icon {
+    display: block;
+    padding: 14px 0 !important;
+    font-size: 46pt !important; }
+
+/*# sourceMappingURL=style.css.map */
