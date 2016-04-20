@@ -1,4 +1,7 @@
-/* Empty. Add your own CSS if you like */
+@import "./ionic.app";
+
+$color1: $assertive;
+$color2: $positive;
 
 .alert-date {
   font-size: 8pt !important;
@@ -6,6 +9,8 @@
 }
 
 .button-dashboard {
+  background: $color1 !important;
+  color: #FFF !important;
   padding: 15px;
   font-size: 10pt;
 
@@ -18,4 +23,35 @@
   }
 
   .type-sensor {  }
+}
+
+.item-divider {
+  background-color: $color2 !important;
+  color: #FFF !important;
+}
+
+.bloc-not-alerts {
+  i {
+    color: $color1;
+    font-size: 45pt;
+  }
+
+  p {
+    font-size: 15pt;
+    margin: 20px 0;
+  }
+}
+
+.button-toggle-jour {
+  border-color: #a50000;
+
+  &.selected {
+    background-color: $color1 !important;
+    color: #FFF;
+    font-weight: bold;
+  }
+}
+
+.card-toggle {
+  box-shadow: none !important;
 }

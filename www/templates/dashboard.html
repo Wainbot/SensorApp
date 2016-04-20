@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col">
                 <div class="card text-center button-dashboard" data-ui-sref="app.boiler">
-                    <span class="temp">43°C</span>
+                    <span class="temp">{{boiler.temp}}°C</span>
                     <br>
                     <i class="icon ion-soup-can"></i>
                     <br>
@@ -12,7 +12,7 @@
             </div>
             <div class="col">
                 <div class="card text-center button-dashboard" data-ui-sref="app.alarm">
-                    <span class="temp">Porte 1</span>
+                    <span class="temp">{{alarm.localisation}}</span>
                     <br>
                     <i class="icon ion-radio-waves"></i>
                     <br>
@@ -21,20 +21,21 @@
             </div>
         </div>
         <div class="card text-center">
-            <div class="item item-divider text-center">
+            <div class="item item-divider bar-positive text-center">
                 Alertes
             </div>
             <div class="item item-text-wrap text-center">
                 <div class="list" data-ng-if="alertes.length > 0">
                     <div class="item text-left" data-ng-repeat="alerte in alertes">
-                        <p class="alert-date">{{alerte.date}}</p>
+                        <p class="alert-date">{{alerte.date | date:'Le dd/MM/yyyy à HH:mm'}}</p>
                         <h2>{{alerte.type}}</h2>
                         <p>{{alerte.cause}}</p>
                     </div>
                 </div>
-                <h6 data-ng-if="alertes.length === 0">
-                    Il n'y a pas d'alerte
-                </h6>
+                <div data-ng-if="alertes.length === 0" class="bloc-not-alerts">
+                    <i class="icon ion-happy"></i>
+                    <p>Tu n'as pas d'alerte !</p>
+                </div>
             </div>
         </div>
     </ion-content>

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -39,6 +39,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                         templateUrl: 'templates/dashboard.html',
                         controller: 'DashboardCtrl'
                     }
+                },
+                resolve: {
+                    Boiler: function (REST) {
+                        return REST.getBoiler();
+                    },
+                    Alarm: function (REST) {
+                        return REST.getAlarm();
+                    },
+                    Alerts: function (REST) {
+                        return REST.getAlerts();
+                    }
                 }
             })
 
@@ -48,6 +59,14 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                     'menuContent': {
                         templateUrl: 'templates/boiler.html',
                         controller: 'BoilerCtrl'
+                    }
+                },
+                resolve: {
+                    Boiler: function (REST) {
+                        return REST.getBoiler();
+                    },
+                    Config: function (CONFIG) {
+                        return CONFIG.getConfig();
                     }
                 }
             })
@@ -59,6 +78,11 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                         templateUrl: 'templates/alarm.html',
                         controller: 'AlarmCtrl'
                     }
+                },
+                resolve: {
+                    Alarm: function (REST) {
+                        return REST.getAlarm();
+                    }
                 }
             })
 
@@ -68,6 +92,11 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                     'menuContent': {
                         templateUrl: 'templates/config.html',
                         controller: 'ConfigCtrl'
+                    }
+                },
+                resolve: {
+                    Config: function (CONFIG) {
+                        return CONFIG.getConfig();
                     }
                 }
             });

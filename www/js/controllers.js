@@ -1,56 +1,76 @@
 angular.module('starter.controllers', [])
 
-    .controller('AppCtrl', function ($rootScope, $scope, $timeout) {
-
-        // With the new view caching in Ionic, Controllers are only called
-        // when they are recreated or on app start, instead of every page change.
-        // To listen for when this page is active (for example, to refresh data),
-        // listen for the $ionicView.enter event:
-        //$scope.$on('$ionicView.enter', function(e) {
+    .controller('AppCtrl', function ($rootScope, $scope) {
+        //$scope.$on('$ionicView.enter', function (e) {
+            //console.info(e);
         //});
     })
 
-    .controller('DashboardCtrl', function ($rootScope, $scope) {
-        $scope.alertes = [
-            {
-                date: '18/04/16',
-                type: 'Chaudière',
-                cause: 'Température trop élevée (50°C)'
-            },
-            {
-                date: '18/04/16',
-                type: 'Détecteur',
-                cause: 'Il a bougé le bougre'
+    .controller('DashboardCtrl', function ($rootScope, $scope, Boiler, Alarm, Alerts) {
+        $scope.alertes = Alerts;
+        $scope.boiler  = Boiler;
+        $scope.alarm   = Alarm;
+    })
+
+    .controller('BoilerCtrl', function ($rootScope, $scope, Boiler, Config, CONFIG) {
+        $scope.boiler = Boiler;
+        $scope.config = Config;
+        $scope.toggleJourVal = 'jour';
+
+        $scope.toggleJour = function (value) {
+            $scope.toggleJourVal = value;
+        };
+
+        $scope.setConfigBoiler = function () {
+            if ($scope.config[$scope.toggleJourVal].temp.min < 0) {
+                $scope.config[$scope.toggleJourVal].temp.min = 0;
             }
-        ];
-
-        //$scope.alertes = [];
-    })
-
-    .controller('BoilerCtrl', function ($rootScope, $scope) {
-
-    })
-
-    .controller('AlarmCtrl', function ($rootScope, $scope) {
-        $scope.alarms = [
-            {
-                date: '18/04/16',
-                localisation: 'porte 1'
-            },
-            {
-                date: '18/04/16',
-                localisation: 'porte 2'
-            },
-            {
-                date: '18/04/16',
-                localisation: 'porte 3'
+            if ($scope.config[$scope.toggleJourVal].temp.min > $scope.config[$scope.toggleJourVal].temp.max) {
+                $scope.config[$scope.toggleJourVal].temp.min = $scope.config[$scope.toggleJourVal].temp.max;
             }
-        ];
+            if ($scope.config[$scope.toggleJourVal].temp.max < $scope.config[$scope.toggleJourVal].temp.min) {
+                $scope.config[$scope.toggleJourVal].temp.max = $scope.config[$scope.toggleJourVal].temp.min;
+            }
 
-        //$scope.alarms = [];
+            CONFIG.setConfig($scope.config);
+        };
     })
 
-    .controller('ConfigCtrl', function ($rootScope, $scope) {
+    .controller('AlarmCtrl', function ($rootScope, $scope, Alarm) {
+        $scope.alarms = Alarm;
+    })
 
+    .controller('ConfigCtrl', function ($rootScope, $scope, Config, CONFIG) {
+        $scope.config = Config;
+        $scope.config.horaires.jour.debut   = new Date($scope.config.horaires.jour.debut);
+        $scope.config.horaires.jour.fin     = new Date($scope.config.horaires.jour.fin);
+        $scope.config.horaires.nuit.debut   = new Date($scope.config.horaires.nuit.debut);
+        $scope.config.horaires.nuit.fin     = new Date($scope.config.horaires.nuit.fin);
+
+        $scope.setConfigSchedule = function (granDay, granStart) {
+            if ($scope.config.horaires.jour.debut > $scope.config.horaires.jour.fin) {
+                $scope.config.horaires.jour.debut = $scope.config.horaires.jour.fin
+            }
+
+            if ($scope.config.horaires.nuit.debut < $scope.config.horaires.nuit.fin) {
+                $scope.config.horaires.nuit.debut = $scope.config.horaires.nuit.fin
+            }
+
+            if (granDay === 'jour') {
+                if (granStart === 'debut') {
+                    $scope.config.horaires.nuit.fin = $scope.config.horaires.jour.debut;
+                } else {
+                    $scope.config.horaires.nuit.debut = $scope.config.horaires.jour.fin;
+                }
+            } else {
+                if (granStart === 'debut') {
+                    $scope.config.horaires.jour.fin = $scope.config.horaires.nuit.debut
+                } else {
+                    $scope.config.horaires.jour.debut = $scope.config.horaires.nuit.fin;
+                }
+            }
+
+            CONFIG.setConfig($scope.config);
+        };
     })
 ;

@@ -5,15 +5,15 @@
                 Historique
             </div>
             <div class="item item-text-wrap text-center">
-                <div class="list" data-ng-if="alarms.length > 0">
-                    <div class="item text-left" data-ng-repeat="alarm in alarms">
-                        <!--<p class="alert-date">{{alarm.date}}</p>-->
+                <div class="list" data-ng-if="alarms.history.length > 0">
+                    <div class="item text-left" data-ng-repeat="alarm in alarms.history">
+                        <p class="alert-date">{{alarm.date | date:'Le dd/MM/yyyy à HH:mm'}}</p>
                         <h2>{{alarm.localisation}}</h2>
-                        <p>{{alarm.date}}</p>
+                        <p>{{alarm.localisation}} a émit un mouvement.</p>
                     </div>
                 </div>
                 <h6 data-ng-if="alarms.length === 0">
-                    Il n'y a pas d'alarme
+                    Il n'y a pas d'historique
                 </h6>
             </div>
         </div>

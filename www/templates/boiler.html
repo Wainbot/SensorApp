@@ -5,13 +5,13 @@
                 Température
             </div>
             <div class="item item-text-wrap text-center">
-                <h1 style="font-size: 50pt;">30°C</h1>
+                <h1 style="font-size: 50pt;">{{boiler.temp}}°C</h1>
             </div>
         </div>
-        <div class="card">
+        <div class="card card-toggle">
             <div class="button-bar">
-                <a class="button">Jour</a>
-                <a class="button">Nuit</a>
+                <span class="button button-toggle-jour" data-ng-click="toggleJour('jour')" data-ng-class="{'selected': toggleJourVal === 'jour'}">Jour</span>
+                <span class="button button-toggle-jour" data-ng-click="toggleJour('nuit')" data-ng-class="{'selected': toggleJourVal === 'nuit'}">Nuit</span>
             </div>
         </div>
         <div class="card">
@@ -21,13 +21,15 @@
             <div class="item item-text-wrap text-center">
                 <div class="item range">
                     <i class="icon ion-thermometer"></i>
-                    <input type="range" name="volume">
-                    <i class="icon ion-ios-snowy"></i>
+                    MIN
+                    <input type="range" name="volume" data-ng-model="config[toggleJourVal].temp.min" ng-change="setConfigBoiler()">
+                    {{config[toggleJourVal].temp.min}}
                 </div>
                 <div class="item range">
                     <i class="icon ion-thermometer"></i>
-                    <input type="range" name="volume">
-                    <i class="icon ion-ios-sunny-outline"></i>
+                    MAX
+                    <input type="range" name="volume" data-ng-model="config[toggleJourVal].temp.max" ng-change="setConfigBoiler()">
+                    {{config[toggleJourVal].temp.max}}
                 </div>
             </div>
         </div>
