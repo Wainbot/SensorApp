@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
     .service('REST', function ($http, $q) {
-        var url = 'http://sensor.jeremyfroment.fr'; // PROD
+        var url = 'http://vps.jeremyfroment.fr:3000/'; // PROD
         //var url = 'http://localhost:3000'; // DEV
 
         return {
