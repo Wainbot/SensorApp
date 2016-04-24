@@ -1,6 +1,7 @@
 angular.module('starter.services', [])
     .service('REST', function ($http, $q) {
-        var url = 'http://192.168.0.133:3000';
+        //var url = 'http://192.168.0.133:3000'; // PROD
+        var url = 'http://localhost:3000'; // DEV
 
         return {
             getBoiler: function () {
